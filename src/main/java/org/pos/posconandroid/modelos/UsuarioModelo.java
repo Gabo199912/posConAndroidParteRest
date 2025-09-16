@@ -1,12 +1,11 @@
 package org.pos.posconandroid.modelos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "usuario")
-public class UsuarioModelo {
+public class  UsuarioModelo {
 
     @Id
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -15,29 +14,32 @@ public class UsuarioModelo {
     private int idUsuario;
 
     @Column(nullable = false)
+    @JsonProperty("nombre")
     private String nombre;
 
 
-
     @Column(nullable = false, name = "nombre_usuario")
+    @JsonProperty("nombre_usuario")
     private String nombreUsuario;
 
 
     @Column(nullable = false, unique = true)
+    @JsonProperty("email")
     private String email;
 
 
 
     @Column(nullable = false, name = "contrasenia_hash")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY, value = "contrasenia_hash")
     private String contraseniaHash;
 
 
     @Column(nullable = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY, value = "activo")
     private Boolean activo;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "tipo_usuario")
+    @JsonProperty("tipo_usuario")
     private String tipoUsuario;
 
 
@@ -109,11 +111,11 @@ public class UsuarioModelo {
         this.contraseniaHash = contraseniaHash;
     }
 
-    public boolean isActivo() {
+    public Boolean getActivo() {
         return activo;
     }
 
-    public void setActivo(boolean activo) {
+    public void setActivo(Boolean activo) {
         this.activo = activo;
     }
 

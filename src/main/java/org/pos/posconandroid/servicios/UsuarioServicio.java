@@ -21,10 +21,10 @@ public class UsuarioServicio {
     public UsuarioServicio(UsuarioRepositorio usuarioRepositorio) {this.usuarioRepositorio = usuarioRepositorio;}
 
 
-    public UsuarioModelo guardarUsuario(UsuarioModelo usuario)  {
+    public void guardarUsuario(UsuarioModelo usuario)  {
         String contraseniaCodificada = passwordEncoder.encode(usuario.getContraseniaHash());
         usuario.setContraseniaHash(contraseniaCodificada);
-        return usuarioRepositorio.save(usuario);
+        usuarioRepositorio.save(usuario);
     }
 
     public boolean verificarUsuario(String nombreUsuario, String contraseniaHash){

@@ -41,14 +41,13 @@ public class UsuarioControlador {
         return ResponseEntity.ok("Usuario eliminado");
     }
 
-    @GetMapping("/verificar/{nombreUsuario}/{contrasenia}")
-    public ResponseEntity<?> verificarUsuario(@PathVariable String nombreUsuario, @PathVariable String contrasenia){
-        boolean ok = usuarioServicio.verificarUsuario(nombreUsuario, contrasenia);
-        UsuarioModelo usuario = usuarioServicio.obtenerUsuarioPorNombre(nombreUsuario);
-
+    @PostMapping("/login")
+    public ResponseEntity<?> verificarUsuario(@RequestBody UsuarioModelo usuario){
+        boolean ok = usuarioServicio.verificarUsuario(usuario.getNombreUsuario(), usuario.getContraseniaHash());
         try {
             if (ok) {
-                return ResponseEntity.ok(usuario);
+                UsuarioModelo usuarioLogueado = usuarioServicio.obtenerUsuarioPorNombre(usuario.getNombreUsuario());
+                return ResponseEntity.ok(usuarioLogueado);
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -65,9 +64,14 @@ public class UsuarioControlador {
         return ResponseEntity.ok(usuarios);
     }
 
-
     @PostMapping("/crear/usuario")
     public ResponseEntity<String> crearUsuario(@RequestBody UsuarioModelo usuario){
+        System.out.println(usuario.getNombreUsuario());
+        System.out.println(usuario.getContraseniaHash());
+        System.out.println(usuario.getEmail());
+        System.out.println(usuario.getTipoUsuario());
+
+
         try {
             usuario.setActivo(true);
             usuarioServicio.guardarUsuario(usuario);

@@ -1,7 +1,6 @@
 package org.pos.posconandroid.security;
 
-import org.apache.catalina.Executor;
-import org.apache.catalina.filters.HttpHeaderSecurityFilter;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,7 +21,9 @@ public class SeguridadConfig{
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests((authz) ->authz
-                        .requestMatchers(HttpMethod.GET,"/usuarios/verificar/{nombreUsuario}/{contrasenia}").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/usuarios/todos").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/usuarios/crear/usuario").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/usuarios/login").permitAll()
                 .anyRequest().authenticated())
                 .csrf(config -> config.disable())
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
