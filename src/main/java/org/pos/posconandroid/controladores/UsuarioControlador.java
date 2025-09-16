@@ -4,6 +4,7 @@ package org.pos.posconandroid.controladores;
 import org.pos.posconandroid.modelos.UsuarioModelo;
 import org.pos.posconandroid.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,19 +42,22 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/verificar/{nombreUsuario}/{contrasenia}")
-    public ResponseEntity<UsuarioModelo> verificarUsuario(@PathVariable String nombreUsuario, @PathVariable String contrasenia){
+    public ResponseEntity<?> verificarUsuario(@PathVariable String nombreUsuario, @PathVariable String contrasenia){
         boolean ok = usuarioServicio.verificarUsuario(nombreUsuario, contrasenia);
         UsuarioModelo usuario = usuarioServicio.obtenerUsuarioPorNombre(nombreUsuario);
 
-        if (ok) {
-            return ResponseEntity.ok(usuario);
-        } else {
-            return ResponseEntity.badRequest().body(null);
+        try {
+            if (ok) {
+                return ResponseEntity.ok(usuario);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error al verificar usuario");
         }
 
     }
-
-
 
     @GetMapping("/todos")
     public ResponseEntity<List<UsuarioModelo>> obtenerTodosLosUsuarios(){
