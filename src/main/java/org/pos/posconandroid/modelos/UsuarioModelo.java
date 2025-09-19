@@ -17,22 +17,17 @@ public class  UsuarioModelo {
     @JsonProperty("nombre")
     private String nombre;
 
-
     @Column(nullable = false, name = "nombre_usuario")
     @JsonProperty("nombre_usuario")
     private String nombreUsuario;
-
 
     @Column(nullable = false, unique = true)
     @JsonProperty("email")
     private String email;
 
-
-
     @Column(nullable = false, name = "contrasenia_hash")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY, value = "contrasenia_hash")
     private String contraseniaHash;
-
 
     @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY, value = "activo")
