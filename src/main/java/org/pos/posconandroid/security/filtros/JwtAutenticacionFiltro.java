@@ -59,9 +59,8 @@ public class JwtAutenticacionFiltro extends UsernamePasswordAuthenticationFilter
 
         org.springframework.security.core.userdetails.User usuario = (org.springframework.security.core.userdetails.User) authResult.getPrincipal();
         String nombreUsuario = usuario.getUsername();
-
-        Collection<? extends GrantedAuthority> roles = authResult.getAuthorities();
-        Claims claims = Jwts.claims().add("rol", roles).build();
+        String rol = authResult.getAuthorities().iterator().next().getAuthority();
+        Claims claims = Jwts.claims().add("rol", rol).build();
 
         String jwt = Jwts.builder()
                 .subject(nombreUsuario)

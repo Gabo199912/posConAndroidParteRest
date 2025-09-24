@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,16 +21,12 @@ public class UsuarioServicio {
     @Autowired
     public UsuarioServicio(UsuarioRepositorio usuarioRepositorio) {this.usuarioRepositorio = usuarioRepositorio;}
 
-    public boolean verificarUsuario(String nombreUsuario, String contraseniaHash){
-        boolean ok = false;
-        List<UsuarioModelo> usuarios = usuarioRepositorio.findBynombreUsuario(nombreUsuario);
-        if(!usuarios.isEmpty()){
-            if(passwordEncoder.matches(contraseniaHash, usuarios.get(0).getContraseniaHash()) && nombreUsuario.equals(usuarios.get(0).getNombreUsuario())){
-                ok = true;
-            }
-        }
-        return ok;
+    public List<UsuarioModelo> listarPorTipoUsuario(String tipoUsuario){
+        List<UsuarioModelo> usuarioModelos = new ArrayList<>();
+
+        return  usuarioRepositorio.findByTipoUsuario(tipoUsuario);
     }
+
 
     public List<UsuarioModelo> obtenerTodos(){
         return usuarioRepositorio.findAll();

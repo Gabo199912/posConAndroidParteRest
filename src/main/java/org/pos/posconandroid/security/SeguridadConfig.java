@@ -2,6 +2,7 @@ package org.pos.posconandroid.security;
 
 
 import org.pos.posconandroid.security.filtros.JwtAutenticacionFiltro;
+import org.pos.posconandroid.security.filtros.JwtValidacionToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

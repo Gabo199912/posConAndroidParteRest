@@ -9,6 +9,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,16 +17,17 @@ import java.util.List;
 public class UsuarioControlador {
 
     private final UsuarioServicio usuarioServicio;
-    private final UsuarioLoginServicio usuarioLoginServicio;
 
     @Autowired
-    public UsuarioControlador(UsuarioServicio usuarioServicio, UsuarioLoginServicio usuarioLoginServicio) {
+    public UsuarioControlador(UsuarioServicio usuarioServicio) {
         this.usuarioServicio = usuarioServicio;
-        this.usuarioLoginServicio = usuarioLoginServicio;
     }
 
-
-
+    @PostMapping("/todos/tipoUsuario")
+    public ResponseEntity<List<UsuarioModelo>>  todosTipoUsuario(@RequestBody String tipoUsuario) {
+        List<UsuarioModelo> usuarioModelos = usuarioServicio.listarPorTipoUsuario(tipoUsuario);
+        return ResponseEntity.ok().body(usuarioModelos);
+    }
 
     @GetMapping("/todos")
     public ResponseEntity<List<UsuarioModelo>> obtenerTodosLosUsuarios(){

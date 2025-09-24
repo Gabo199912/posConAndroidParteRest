@@ -13,6 +13,8 @@ public interface UsuarioRepositorio extends JpaRepository<UsuarioModelo, Integer
 
     boolean existsByNombreUsuario(String nombreUsuario);
 
+    List<UsuarioModelo> findByTipoUsuario(String tipoUsuario);
+
     Optional<UsuarioModelo> findByNombreUsuario(String nombreUsuario);
 
 }
