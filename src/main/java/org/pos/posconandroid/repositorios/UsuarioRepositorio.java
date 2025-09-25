@@ -9,12 +9,16 @@ import java.util.Optional;
 
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<UsuarioModelo, Integer> {
-    List<UsuarioModelo> findBynombreUsuario(String nombreUsuario);
-
-    boolean existsByNombreUsuario(String nombreUsuario);
 
     List<UsuarioModelo> findByTipoUsuario(String tipoUsuario);
 
     Optional<UsuarioModelo> findByNombreUsuario(String nombreUsuario);
+
+
+    //para crear y eliminar usuarios
+    UsuarioModelo save(UsuarioModelo usuarioModelo);
+    boolean existsByEmail(String email);
+    boolean existsByNombreUsuario(String nombreUsuario);
+    void deleteByNombreUsuario(String nombreUsuario);
 
 }

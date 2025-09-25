@@ -1,5 +1,6 @@
 package org.pos.posconandroid.security.filtros;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.JwtException;
@@ -16,7 +17,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.pos.posconandroid.security.TokenJwtConfig.*;
 
@@ -42,7 +45,6 @@ public class JwtValidacionToken extends BasicAuthenticationFilter {
 
             GrantedAuthority authority = new SimpleGrantedAuthority(rol);
 
-
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(nombreUsuario, null, List.of(authority));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             chain.doFilter(request, response);
@@ -50,9 +52,14 @@ public class JwtValidacionToken extends BasicAuthenticationFilter {
 
 
         } catch (JwtException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
+            Map<String, String> body = new HashMap<>();
+            body.put("mensaje", "ERROR EN LA VALIDACION DEL TOKEN");
+            body.put("error", e.getMessage());
+
+
+            response.getWriter().write(new ObjectMapper().writeValueAsString(body));
+            response.setContentType("application/json");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 }

@@ -34,10 +34,13 @@ public class SeguridadConfig{
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests((authz) ->authz
-                        .requestMatchers(HttpMethod.GET,"/usuarios/todos").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/usuarios/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuarios/crear").hasAnyRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.DELETE, "/usuarios/eliminar/{nombreUsuario}").hasAnyRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.GET, "/usuarios/tipo/{tipoUsuario}").hasAnyRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.GET, "/usuarios/todos").hasAnyRole("ADMINISTRADOR", "VENDEDOR")
                 .anyRequest().authenticated())
                 .addFilter(new JwtAutenticacionFiltro(authenticationManager()))
+                .addFilter(new JwtValidacionToken(authenticationManager()))
                 .csrf(config -> config.disable())
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();

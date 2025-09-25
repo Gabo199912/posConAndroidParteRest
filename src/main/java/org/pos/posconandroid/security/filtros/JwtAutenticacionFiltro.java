@@ -65,7 +65,7 @@ public class JwtAutenticacionFiltro extends UsernamePasswordAuthenticationFilter
         String jwt = Jwts.builder()
                 .subject(nombreUsuario)
                 .claims(claims)
-                .expiration(new Date(System.currentTimeMillis() + 3600000))
+                .expiration(new Date(System.currentTimeMillis() + 43200000))
                 .issuedAt(new Date())
                 .signWith(SECRET_KEY)
                 .compact();

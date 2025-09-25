@@ -40,12 +40,12 @@ public class UsuarioLoginServicio implements UserDetailsService {
         );
 
         return new org.springframework.security.core.userdetails.User(
-                user.getNombreUsuario(),   // tu username
+                user.getNombreUsuario(),
                 user.getContraseniaHash(),
                 user.getActivo(),
                 true,
                 true,
-                true,// tu password encriptada
+                true,
                 authorities);
     }
 }

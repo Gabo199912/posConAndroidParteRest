@@ -5,6 +5,7 @@ import org.pos.posconandroid.repositorios.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +23,34 @@ public class UsuarioServicio {
     public UsuarioServicio(UsuarioRepositorio usuarioRepositorio) {this.usuarioRepositorio = usuarioRepositorio;}
 
     public List<UsuarioModelo> listarPorTipoUsuario(String tipoUsuario){
-        List<UsuarioModelo> usuarioModelos = new ArrayList<>();
-
         return  usuarioRepositorio.findByTipoUsuario(tipoUsuario);
+    }
+
+
+    public UsuarioModelo guardarUsuario(UsuarioModelo usuarioModelo){
+        String contraseñaLista = passwordEncoder.encode(usuarioModelo.getContraseniaHash());
+        usuarioModelo.setContraseniaHash(contraseñaLista);
+        return usuarioRepositorio.save(usuarioModelo);
     }
 
 
     public List<UsuarioModelo> obtenerTodos(){
         return usuarioRepositorio.findAll();
+    }
+
+    @Transactional
+    public void eliminarUsuario(String nombreUsuario){
+        usuarioRepositorio.deleteByNombreUsuario(nombreUsuario);
+    }
+
+    public boolean verificarCorreoExistente(String email){
+        boolean ok = usuarioRepositorio.existsByEmail(email);
+        return ok;
+    }
+
+    public boolean verificarUsuarioExistente(String nombreUsuario){
+        boolean ok = usuarioRepositorio.existsByNombreUsuario(nombreUsuario);
+        return ok;
     }
 
 
