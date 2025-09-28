@@ -34,11 +34,27 @@ public class SeguridadConfig{
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests((authz) ->authz
-                        .requestMatchers(HttpMethod.POST, "/usuarios/crear").hasAnyRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.DELETE, "/usuarios/eliminar/{nombreUsuario}").hasAnyRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.GET, "/usuarios/tipo/{tipoUsuario}").hasAnyRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.GET, "/usuarios/todos").hasAnyRole("ADMINISTRADOR", "VENDEDOR")
-                .anyRequest().authenticated())
+                //ROLES QUE SEAN ADMINISTRADORES O SUPERIOR
+                        .requestMatchers(HttpMethod.POST, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+
+
+                //ROLES PARA CLIENTES
+                        .requestMatchers(HttpMethod.POST, "/cliente/administrador/**").hasAnyRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.DELETE, "/cliente/administrador/**").hasAnyRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.GET, "/cliente/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
+
+                //ROLES PARA TIPOS DE PAGOS
+                        .requestMatchers(HttpMethod.POST, "/TipoPagos/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/TipoPagos/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/TipoPagos/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
+
+                //PARA ROLES GENERALES
+                        .requestMatchers(HttpMethod.GET, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
+                        .anyRequest().authenticated())
                 .addFilter(new JwtAutenticacionFiltro(authenticationManager()))
                 .addFilter(new JwtValidacionToken(authenticationManager()))
                 .csrf(config -> config.disable())

@@ -1,6 +1,7 @@
 package org.pos.posconandroid.modelos;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,12 +11,15 @@ public class ClienteModelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cliente")
+    @JsonProperty("id_cliente")
     private int idCliente;
 
     @Column(nullable = true)
     private String nombre;
 
+
     @Column(nullable = true, unique = true, name = "dpi_nit")
+    @JsonProperty("dpi_nit")
     private String dpiNit;
 
     @Column(nullable = true)

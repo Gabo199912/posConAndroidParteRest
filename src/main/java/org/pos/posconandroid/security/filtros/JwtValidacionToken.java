@@ -33,6 +33,7 @@ public class JwtValidacionToken extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
             String header = request.getHeader(HEADER_AUTHORIZATION);
             if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
             }
 

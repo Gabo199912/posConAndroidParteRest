@@ -28,7 +28,7 @@ public class UsuarioControlador {
 
 
     @PreAuthorize("hasRole('ADMINISTRADOR')")
-    @PostMapping("/crear")
+    @PostMapping("/administrador/crear")
     public ResponseEntity<?> crearUsuario(@RequestBody UsuarioModelo usuarioModelo){
         boolean okUsurario = usuarioServicio.verificarUsuarioExistente(usuarioModelo.getNombreUsuario());
         boolean okCorreo = usuarioServicio.verificarCorreoExistente(usuarioModelo.getEmail());
@@ -51,7 +51,7 @@ public class UsuarioControlador {
     }
 
     @PreAuthorize("hasRole('ADMINISTRADOR')")
-    @DeleteMapping("/eliminar/{nombreUsuario}")
+    @DeleteMapping("/administrador/eliminar/{nombreUsuario}")
     public ResponseEntity<String> eliminarUsuario(@PathVariable String nombreUsuario){
         boolean ok = usuarioServicio.verificarUsuarioExistente(nombreUsuario);
 
@@ -64,15 +64,15 @@ public class UsuarioControlador {
     }
 
     @PreAuthorize("hasRole('ADMINISTRADOR')")
-    @GetMapping("/tipo/{tipoUsuario}")
+    @GetMapping("/administrador/tipo/{tipoUsuario}")
     public ResponseEntity<List<UsuarioModelo>> todosTipoUsuario(@PathVariable String tipoUsuario) {
-        String tipoUsuarioRecibido = tipoUsuario.toLowerCase();
+        String tipoUsuarioRecibido = tipoUsuario.toUpperCase();
         List<UsuarioModelo> usuarioModelos = usuarioServicio.listarPorTipoUsuario(tipoUsuarioRecibido);
         return ResponseEntity.ok().body(usuarioModelos);
     }
 
     @PreAuthorize("hasRole('VENDEDOR') or hasRole('ADMINISTRADOR')")
-    @GetMapping("/todos")
+    @GetMapping("/vendedor/todos")
     public ResponseEntity<List<UsuarioModelo>> obtenerTodosLosUsuarios(){
         List<UsuarioModelo> usuarios = usuarioServicio.obtenerTodos();
         return ResponseEntity.ok(usuarios);
