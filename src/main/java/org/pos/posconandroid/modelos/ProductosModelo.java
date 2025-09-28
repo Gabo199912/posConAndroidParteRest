@@ -1,5 +1,6 @@
 package org.pos.posconandroid.modelos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -14,21 +15,25 @@ public class ProductosModelo {
     private int idProducto;
 
     @Column(nullable = false, name = "nombre_producto")
+    @JsonProperty("nombre_producto")
     private String nombreProducto;
 
     @Column(nullable = false)
     private String descripcion;
 
     @Column(nullable = false, name = "precio_costo")
+    @JsonProperty("precio_costo")
     private BigDecimal precioCosto;
 
     @Column(nullable = false, name = "precio_venta")
+    @JsonProperty("precio_venta")
     private BigDecimal precioVenta;
 
     @Column(nullable = false)
     private int stock;
 
     @Column(nullable = false, name = "codigo_barras")
+    @JsonProperty("codigo_barras")
     private String codigoBarras;
 
 

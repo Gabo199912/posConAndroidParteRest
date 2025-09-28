@@ -18,7 +18,7 @@ public class ClienteModelo {
     private String nombre;
 
 
-    @Column(nullable = true, unique = true, name = "dpi_nit")
+    @Column(nullable = false, unique = true, name = "dpi_nit")
     @JsonProperty("dpi_nit")
     private String dpiNit;
 

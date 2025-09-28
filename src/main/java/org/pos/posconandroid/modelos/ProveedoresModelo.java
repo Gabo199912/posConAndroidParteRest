@@ -1,6 +1,7 @@
 package org.pos.posconandroid.modelos;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +14,7 @@ public class ProveedoresModelo {
     private int idProveedor;
 
     @Column(nullable = false, name = "nombre_proveedor")
+    @JsonProperty("nombre_proveedor")
     private String nombreProveedor;
 
     @Column(nullable = false)
@@ -28,6 +30,14 @@ public class ProveedoresModelo {
 
     @Column
     private boolean activo;
+
+    public int getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(int idProveedor) {
+        this.idProveedor = idProveedor;
+    }
 
     public String getNombreProveedor() {
         return nombreProveedor;

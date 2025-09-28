@@ -50,6 +50,16 @@ public class SeguridadConfig{
                         .requestMatchers(HttpMethod.DELETE, "/TipoPagos/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
                         .requestMatchers(HttpMethod.GET, "/TipoPagos/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
 
+                    //ROLES PARA PRODUCTOS
+                        .requestMatchers(HttpMethod.POST, "/producto/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/producto/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/producto/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
+
+                //ROLES PARA PROVEEDORES
+                        .requestMatchers(HttpMethod.POST, "/proveedor/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/proveedor/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                .requestMatchers(HttpMethod.GET, "/proveedor/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
+
                 //PARA ROLES GENERALES
                         .requestMatchers(HttpMethod.GET, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
                         .requestMatchers(HttpMethod.POST, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
