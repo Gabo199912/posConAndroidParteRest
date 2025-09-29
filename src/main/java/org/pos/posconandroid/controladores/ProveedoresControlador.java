@@ -27,6 +27,19 @@ public class ProveedoresControlador {
         return ResponseEntity.status(HttpStatus.OK).body(listaProveedores);
     }
 
+    @PreAuthorize("hasRole('VENDEDOR') or hasRole('ADMINISTRADOR')")
+    @GetMapping("/vendedor/listar/porNombre/{nombreProveedor}")
+    public ResponseEntity<?> obtenerProveedoresPorNombre(@PathVariable String nombreProveedor){
+        String nombreProveedorRecibido = nombreProveedor.trim();
+        boolean ok = proveedoresServicio.buscarPorNombre(nombreProveedorRecibido);
+
+        if (!ok){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("no existe el proveedor con ese nombre");
+        }
+        List<ProveedoresModelo> listaProveedores =  proveedoresServicio.listarProveedoresPorNombre(nombreProveedor);
+        return ResponseEntity.status(HttpStatus.OK).body(listaProveedores);
+    }
+
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     @PostMapping("/administrador/crear")
     public ResponseEntity<?> crearProveedor(@RequestBody ProveedoresModelo proveedoresModelo){

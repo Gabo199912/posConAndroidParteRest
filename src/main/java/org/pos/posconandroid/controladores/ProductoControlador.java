@@ -76,4 +76,17 @@ public class ProductoControlador {
     }
 
 
+    @PreAuthorize("hasRole('VENDEDOR') or hasRole('ADMINISTRADOR')")
+    @GetMapping("/vendedor/listar/por/{nombreProducto}")
+    public ResponseEntity<?> listarPorNombre(@PathVariable String nombreProducto){
+        String nombreProductoRecibido = nombreProducto.trim();
+        boolean ok = productosServicio.buscarPorNombre(nombreProductoRecibido);
+        if (!ok){
+            return ResponseEntity.status(404).body("No existe el producto con ese nombre");
+        }
+        List<ProductosModelo> listaProductos = productosServicio.listarProductosPorNombre(nombreProducto);
+        return ResponseEntity.ok(listaProductos);
+    }
+
+
 }

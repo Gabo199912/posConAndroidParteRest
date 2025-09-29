@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ProveedoresRepositorio extends JpaRepository<ProveedoresModelo, Integer> {
     boolean existsByIdProveedor(Integer idProveedor);
+    boolean existsByNombreProveedor(String NombreProveedor);
+    List<ProveedoresModelo> findByNombreProveedor(String nombreProveedor);
 }

@@ -24,8 +24,17 @@ public class ProductosServicio {
         return productosRepositorio.findAll();
     }
 
+    public List<ProductosModelo> listarProductosPorNombre(String nombreProducto){
+        return productosRepositorio.findByNombreProducto(nombreProducto);
+    }
+
     public boolean buscarPorId(int id){
         boolean ok = productosRepositorio.existsByIdProducto(id);
+        return ok;
+    }
+
+    public boolean buscarPorNombre(String nombreProducto){
+        boolean ok = productosRepositorio.existsByNombreProducto(nombreProducto);
         return ok;
     }
 

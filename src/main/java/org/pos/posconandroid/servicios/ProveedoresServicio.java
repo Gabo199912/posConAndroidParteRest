@@ -24,12 +24,20 @@ public class ProveedoresServicio {
         return proveedoresRepositorio.findAll();
     }
 
+    public List<ProveedoresModelo> listarProveedoresPorNombre(String nombreProveedor){
+        return proveedoresRepositorio.findByNombreProveedor(nombreProveedor);
+    }
+
     public void eliminarProveedor(Integer id){
         proveedoresRepositorio.deleteById(id);
     }
 
     public boolean buscarPorId(int id){
         boolean ok = proveedoresRepositorio.existsByIdProveedor(id);
+        return ok;
+    }
+    public boolean buscarPorNombre(String nombreProveedor){
+        boolean ok = proveedoresRepositorio.existsByNombreProveedor(nombreProveedor);
         return ok;
     }
 }
