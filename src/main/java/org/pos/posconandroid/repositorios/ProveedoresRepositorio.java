@@ -11,4 +11,5 @@ public interface ProveedoresRepositorio extends JpaRepository<ProveedoresModelo,
     boolean existsByIdProveedor(Integer idProveedor);
     boolean existsByNombreProveedor(String NombreProveedor);
     List<ProveedoresModelo> findByNombreProveedor(String nombreProveedor);
+    ProveedoresModelo findByIdProveedor(Integer idProveedor);
 }

@@ -34,12 +34,6 @@ public class SeguridadConfig{
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests((authz) ->authz
-                //ROLES QUE SEAN ADMINISTRADORES O SUPERIOR
-                        .requestMatchers(HttpMethod.POST, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
-
-
                 //ROLES PARA CLIENTES
                         .requestMatchers(HttpMethod.POST, "/cliente/administrador/**").hasAnyRole("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.DELETE, "/cliente/administrador/**").hasAnyRole("ADMINISTRADOR")
@@ -64,6 +58,11 @@ public class SeguridadConfig{
                         .requestMatchers(HttpMethod.GET, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
                         .requestMatchers(HttpMethod.POST, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
+
+                        .requestMatchers(HttpMethod.POST, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+
                         .anyRequest().authenticated())
                 .addFilter(new JwtAutenticacionFiltro(authenticationManager()))
                 .addFilter(new JwtValidacionToken(authenticationManager()))

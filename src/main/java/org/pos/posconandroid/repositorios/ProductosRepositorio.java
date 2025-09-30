@@ -11,4 +11,5 @@ public interface ProductosRepositorio extends JpaRepository<ProductosModelo, Int
     boolean existsByIdProducto(Integer idProducto);
     boolean existsByNombreProducto(String nombreProducto);
     List<ProductosModelo> findByNombreProducto(String nombreProducto);
+    List<ProductosModelo> findAllByIdProducto(List<Integer> idProducto);
 }

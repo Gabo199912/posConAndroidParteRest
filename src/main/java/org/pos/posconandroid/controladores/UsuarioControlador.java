@@ -66,7 +66,7 @@ public class UsuarioControlador {
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     @GetMapping("/administrador/tipo/{tipoUsuario}")
     public ResponseEntity<List<UsuarioModelo>> todosTipoUsuario(@PathVariable String tipoUsuario) {
-        String tipoUsuarioRecibido = tipoUsuario.toUpperCase();
+        String tipoUsuarioRecibido = tipoUsuario.toLowerCase();
         List<UsuarioModelo> usuarioModelos = usuarioServicio.listarPorTipoUsuario(tipoUsuarioRecibido);
         return ResponseEntity.ok().body(usuarioModelos);
     }
