@@ -1,5 +1,6 @@
 package org.pos.posconandroid.repositorios;
 
+
 import org.pos.posconandroid.modelos.UsuarioModelo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

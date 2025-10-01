@@ -27,30 +27,5 @@ public class DetalleCompraServicio {
         this.proveedoresRepositorio = proveedoresRepositorio;
     }
 
-    public void generarCompra(List<Integer> idProducto, Integer idProveedor, List<Integer> cantidad, BigDecimal totalCompra){
-        DetalleCompraModelo detalle = new DetalleCompraModelo();
-
-        List<ProductosModelo> productos = productosRepositorio.findAllByIdProducto(idProducto);
-        ProveedoresModelo proveedor = proveedoresRepositorio.findByIdProveedor(idProveedor);
-
-        List<ProductoCompraModelo> productosConPrecio = new ArrayList<>();
-        for (int i = 0; i < productos.size(); i++){
-            productosConPrecio.add(new ProductoCompraModelo(productos.get(i), cantidad.get(i)));
-        }
-
-        int cantidadTotal = 0;
-        for (int cantidades: cantidad){
-            cantidadTotal += cantidades;
-        }
-
-        DetalleCompraModelo detalleCompraModelo = new DetalleCompraModelo();
-        detalleCompraModelo.setProductos(productos);
-        detalleCompraModelo.setProveedores(proveedor);
-        detalleCompraModelo.setCantidad(cantidadTotal);
-        detalleCompraModelo.setTotalCompar(totalCompra);
-
-
-        detalleCompraRepositorio.save(detalleCompraModelo);
-    }
 
 }

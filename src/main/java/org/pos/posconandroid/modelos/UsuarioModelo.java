@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "usuario")
-public class  UsuarioModelo {
+public class UsuarioModelo {
 
     @Id
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
