@@ -3,6 +3,7 @@ package org.pos.posconandroid.security;
 
 import org.pos.posconandroid.security.filtros.JwtAutenticacionFiltro;
 import org.pos.posconandroid.security.filtros.JwtValidacionToken;
+import org.pos.posconandroid.servicios.UsuarioAdministradorInicializador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SeguridadConfig{
+public class SeguridadConfig {
+
+
 
     @Autowired
     private AuthenticationConfiguration authenticationConfiguration;
@@ -63,6 +66,8 @@ public class SeguridadConfig{
                         .requestMatchers(HttpMethod.DELETE, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
                         .requestMatchers(HttpMethod.GET, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
 
+                        .requestMatchers("/login").permitAll()
+
                         .anyRequest().authenticated())
                 .addFilter(new JwtAutenticacionFiltro(authenticationManager()))
                 .addFilter(new JwtValidacionToken(authenticationManager()))
@@ -70,4 +75,6 @@ public class SeguridadConfig{
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
+
+
 }

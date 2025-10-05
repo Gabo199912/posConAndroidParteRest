@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.pos.posconandroid.modelos.UsuarioModelo;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -74,12 +75,12 @@ public class JwtAutenticacionFiltro extends UsernamePasswordAuthenticationFilter
 
         Map<String, String> body = new HashMap<>();
         body.put("token", jwt);
-        body.put("usuario", nombreUsuario);
+        body.put("nombre_usuario", nombreUsuario);
         body.put("mensaje", String.format("Usuario %s autenticado exitosamente", nombreUsuario));
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setContentType("application/json");
-        response.setStatus(HttpServletResponse.SC_OK);
+        response.setStatus(HttpStatus.OK.value());
     }
 
     @Override

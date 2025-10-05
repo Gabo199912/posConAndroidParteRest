@@ -43,6 +43,10 @@ public class UsuarioServicio {
         usuarioRepositorio.deleteByNombreUsuario(nombreUsuario);
     }
 
+    public void eliminarUsuarioPorId(int id){
+        usuarioRepositorio.deleteById(id);
+    }
+
     public boolean verificarCorreoExistente(String email){
         boolean ok = usuarioRepositorio.existsByEmail(email);
         return ok;
@@ -50,6 +54,11 @@ public class UsuarioServicio {
 
     public boolean verificarUsuarioExistente(String nombreUsuario){
         boolean ok = usuarioRepositorio.existsByNombreUsuario(nombreUsuario);
+        return ok;
+    }
+
+    public boolean verificarUsuarioPorId(int id){
+        boolean ok = usuarioRepositorio.existsByIdUsuario(id);
         return ok;
     }
 

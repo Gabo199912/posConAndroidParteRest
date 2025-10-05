@@ -19,6 +19,7 @@ public interface UsuarioRepositorio extends JpaRepository<UsuarioModelo, Integer
     //para crear y eliminar usuarios
     boolean existsByEmail(String email);
     boolean existsByNombreUsuario(String nombreUsuario);
+    boolean existsByIdUsuario(Integer idUsuario);
     void deleteByNombreUsuario(String nombreUsuario);
 
 }

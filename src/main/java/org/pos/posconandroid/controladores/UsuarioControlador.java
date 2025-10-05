@@ -12,8 +12,7 @@ import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -34,32 +33,54 @@ public class UsuarioControlador {
         boolean okCorreo = usuarioServicio.verificarCorreoExistente(usuarioModelo.getEmail());
         String tipoUsuario = usuarioModelo.getTipoUsuario().toUpperCase();
 
+        System.out.println(usuarioModelo.getNombreUsuario() + " " + usuarioModelo.getNombre() + " " + usuarioModelo.getTipoUsuario() + " " + usuarioModelo.getEmail() + " " + usuarioModelo.getContraseniaHash());
+
         if (okUsurario || okCorreo){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("El usuario o correo ya existe en el sistema, intente con otros datos");
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("nombre_usuario", "El usuario o correo ya existe en el sistema, intente con otros datos");
+            respuesta.put("Respuesta", "CONFLICTO");
+
+
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(respuesta);
         }
 
         if (usuarioModelo.getNombreUsuario().isEmpty() || usuarioModelo.getNombre().isEmpty() || usuarioModelo.getTipoUsuario().isEmpty()
         || usuarioModelo.getEmail().isEmpty() || usuarioModelo.getContraseniaHash().isEmpty()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Los campos no pueden estar vacios");
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("nombre_usuario", "Los campos no pueden estar vacios");
+            respuesta.put("Respuesta", "BAD_REQUEST");
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
         }
 
 
         usuarioModelo.setActivo(true);
         usuarioModelo.setTipoUsuario("ROLE_" + tipoUsuario);
         usuarioServicio.guardarUsuario(usuarioModelo);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario creado con exito");
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("nombre_usuario", usuarioModelo.getNombreUsuario());
+        respuesta.put("Respuesta", "Usuario Creado con exito");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(respuesta);
     }
 
     @PreAuthorize("hasRole('ADMINISTRADOR')")
-    @DeleteMapping("/administrador/eliminar/{nombreUsuario}")
-    public ResponseEntity<String> eliminarUsuario(@PathVariable String nombreUsuario){
+        @DeleteMapping("/administrador/eliminar/{nombreUsuario}")
+    public ResponseEntity<?> eliminarUsuario(@PathVariable String nombreUsuario){
         boolean ok = usuarioServicio.verificarUsuarioExistente(nombreUsuario);
+        System.out.println(nombreUsuario);
 
         if (ok){
             usuarioServicio.eliminarUsuario(nombreUsuario);
-            return ResponseEntity.status(HttpStatus.OK).body("Usuario eliminado con exito");
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("nombre_usuario", "usuario eliminado con exito");
+            respuesta.put("Respuesta", "OK");
+            return ResponseEntity.status(HttpStatus.OK).body(respuesta);
         }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EL USUARIO NO SE ENCONTRO EN EL SISTEMA");
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("nombre_usuario", "El usuario no existe en el sistema");
+            respuesta.put("Respuesta", "NOT_FOUND");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
     }
 
