@@ -28,6 +28,10 @@ public class ProveedoresServicio {
         return proveedoresRepositorio.findByNombreProveedor(nombreProveedor);
     }
 
+    public ProveedoresModelo buscarProveedorPorId(Integer idProveedor){
+        return proveedoresRepositorio.findById(idProveedor).orElse(null);
+    }
+
     public void eliminarProveedor(Integer id){
         proveedoresRepositorio.deleteById(id);
     }

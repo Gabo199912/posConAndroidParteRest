@@ -3,7 +3,6 @@ package org.pos.posconandroid.security;
 
 import org.pos.posconandroid.security.filtros.JwtAutenticacionFiltro;
 import org.pos.posconandroid.security.filtros.JwtValidacionToken;
-import org.pos.posconandroid.servicios.UsuarioAdministradorInicializador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,9 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SeguridadConfig {
-
-
+public class SeguridadConfig{
 
     @Autowired
     private AuthenticationConfiguration authenticationConfiguration;
@@ -37,6 +34,12 @@ public class SeguridadConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests((authz) ->authz
+                //ROLES QUE SEAN ADMINISTRADORES O SUPERIOR
+                        .requestMatchers(HttpMethod.POST, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+
+
                 //ROLES PARA CLIENTES
                         .requestMatchers(HttpMethod.POST, "/cliente/administrador/**").hasAnyRole("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.DELETE, "/cliente/administrador/**").hasAnyRole("ADMINISTRADOR")
@@ -61,13 +64,6 @@ public class SeguridadConfig {
                         .requestMatchers(HttpMethod.GET, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
                         .requestMatchers(HttpMethod.POST, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
-
-                        .requestMatchers(HttpMethod.POST, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
-
-                        .requestMatchers("/login").permitAll()
-
                         .anyRequest().authenticated())
                 .addFilter(new JwtAutenticacionFiltro(authenticationManager()))
                 .addFilter(new JwtValidacionToken(authenticationManager()))
@@ -75,6 +71,4 @@ public class SeguridadConfig {
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
-
-
 }
