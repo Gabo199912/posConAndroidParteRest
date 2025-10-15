@@ -34,4 +34,28 @@ public class DetalleVentaModelo {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+
+    public int getIdDetalle() {
+        return idDetalle;
+    }
+
+    public void setIdDetalle(int idDetalle) {
+        this.idDetalle = idDetalle;
+    }
+
+    public VentaModelo getVenta() {
+        return venta;
+    }
+
+    public void setVenta(VentaModelo venta) {
+        this.venta = venta;
+    }
+
+    public ProductosModelo getProductos() {
+        return productos;
+    }
+
+    public void setProductos(ProductosModelo productos) {
+        this.productos = productos;
+    }
 }

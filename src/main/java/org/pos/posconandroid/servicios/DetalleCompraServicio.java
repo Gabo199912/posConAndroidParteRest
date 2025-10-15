@@ -12,7 +12,11 @@ public class DetalleCompraServicio {
     private final DetalleCompraRepositorio detalleCompraRepositorio;
 
     @Autowired
+    public DetalleCompraServicio(DetalleCompraRepositorio detalleCompraRepositorio) {
         this.detalleCompraRepositorio = detalleCompraRepositorio;
+    }
+    public void guardarDetalle(DetalleCompraModelo detalleCompraModelo){
+        detalleCompraRepositorio.save(detalleCompraModelo);
     }
 
 
