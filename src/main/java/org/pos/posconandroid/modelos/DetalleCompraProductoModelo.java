@@ -7,18 +7,8 @@ import jakarta.persistence.*;
 public class DetalleCompraProductoModelo {
     @Id
     @Column(name = "id_detalle_compra_producto")
+    private Integer idDetalleCompraProducto;
 
 
 
-    }
-
-    }
-
-    }
-
-    }
-
-    }
-
-    }
 }
