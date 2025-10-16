@@ -5,12 +5,14 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "detalle_compra_producto")
 public class DetalleCompraProductoModelo {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_detalle_compra_producto")
     private Integer idDetalleCompraProducto;
 
     @ManyToOne
-    @JoinColumn(name = "id_detalle")
+    @JoinColumn(name = "id_detalle_compra")
     private DetalleCompraModelo detalle;
 
     @ManyToOne(fetch = FetchType.LAZY)

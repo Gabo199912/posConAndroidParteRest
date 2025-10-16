@@ -7,14 +7,19 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "detalle_compra")
 public class DetalleCompraModelo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_deatlle_compra")
+    @Column(name = "id_detalle_compra")
     private Integer idDetalleCompra;
 
     @ManyToOne
     @JoinColumn(name = "id_proveedor")
     private ProveedoresModelo proveedores;
+
+    @ManyToOne
+    @JoinColumn(name = "id_producto")
+    private ProductosModelo productos;
 
     @Column(name = "cantidad")
     private Integer cantidad;
@@ -36,6 +41,14 @@ public class DetalleCompraModelo {
 
     public void setProveedores(ProveedoresModelo proveedores) {
         this.proveedores = proveedores;
+    }
+
+    public ProductosModelo getProductos() {
+        return productos;
+    }
+
+    public void setProductos(ProductosModelo productos) {
+        this.productos = productos;
     }
 
     public Integer getCantidad() {

@@ -36,7 +36,7 @@ public class SeguridadConfig{
         return http.authorizeHttpRequests((authz) ->authz
                 //ROLES QUE SEAN ADMINISTRADORES O SUPERIOR
                         .requestMatchers(HttpMethod.POST, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN") // <- hay que .permitAll()
                         .requestMatchers(HttpMethod.GET, "/usuarios/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
 
 
@@ -57,16 +57,20 @@ public class SeguridadConfig{
 
                 //ROLES PARA PROVEEDORES
                         .requestMatchers(HttpMethod.POST, "/proveedor/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/proveedor/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
-                .requestMatchers(HttpMethod.GET, "/proveedor/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/proveedor/administrador/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/proveedor/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
 
                 //PARA ROLES GENERALES
                         .requestMatchers(HttpMethod.GET, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
                         .requestMatchers(HttpMethod.POST, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/usuarios/vendedor/**").hasAnyRole("ADMINISTRADOR", "VENDEDOR", "SUPER_ADMIN")
+
+                //PARA GENERAR COMPRAS
+                        .requestMatchers(HttpMethod.POST, "/compras/administrador/generarCompra/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/compras/administrador/proveedores/**").hasAnyRole("ADMINISTRADOR", "SUPER_ADMIN")
                         .anyRequest().authenticated())
-                .addFilter(new JwtAutenticacionFiltro(authenticationManager()))
-                .addFilter(new JwtValidacionToken(authenticationManager()))
+                .addFilter(new JwtAutenticacionFiltro(authenticationManager())) // <- debemos comentar esta linea
+                .addFilter(new JwtValidacionToken(authenticationManager())) // <- debemos comentar esta linea
                 .csrf(config -> config.disable())
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
