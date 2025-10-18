@@ -21,7 +21,7 @@ public class DetalleVentaModelo {
     @JoinColumn(name = "id_producto", nullable = false, foreignKey = @ForeignKey(name="id_producto"))
     private ProductosModelo productos;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_venta", nullable = false, foreignKey = @ForeignKey(name="id_venta"))
     private VentaModelo venta;
 

@@ -32,4 +32,28 @@ public class VentaModelo {
     public void setTotalVenta(BigDecimal totalVenta) {
         this.totalVenta = totalVenta;
     }
+
+    public int getIdVenta() {
+        return idVenta;
+    }
+
+    public void setIdVenta(int idVenta) {
+        this.idVenta = idVenta;
+    }
+
+    public ClienteModelo getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteModelo cliente) {
+        this.cliente = cliente;
+    }
+
+    public UsuarioModelo getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioModelo usuario) {
+        this.usuario = usuario;
+    }
 }

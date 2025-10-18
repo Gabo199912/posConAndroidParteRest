@@ -19,4 +19,28 @@ public class PagosModelo {
     @JoinColumn(name = "id_venta", nullable = false, foreignKey = @ForeignKey(name="id_venta"))
     private VentaModelo ventas;
 
+
+    public int getIdPago() {
+        return idPago;
+    }
+
+    public void setIdPago(int idPago) {
+        this.idPago = idPago;
+    }
+
+    public TipoPagoModel getTipoPago() {
+        return tipoPago;
+    }
+
+    public void setTipoPago(TipoPagoModel tipoPago) {
+        this.tipoPago = tipoPago;
+    }
+
+    public VentaModelo getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(VentaModelo ventas) {
+        this.ventas = ventas;
+    }
 }
