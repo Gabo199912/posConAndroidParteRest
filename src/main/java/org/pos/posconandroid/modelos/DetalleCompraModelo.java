@@ -17,15 +17,14 @@ public class DetalleCompraModelo {
     @JoinColumn(name = "id_proveedor")
     private ProveedoresModelo proveedores;
 
-    @ManyToOne
-    @JoinColumn(name = "id_producto")
-    private ProductosModelo productos;
 
     @Column(name = "cantidad")
     private Integer cantidad;
 
     @Column(name = "total")
     private BigDecimal total;
+
+
 
     public Integer getIdDetalleCompra() {
         return idDetalleCompra;
@@ -42,14 +41,7 @@ public class DetalleCompraModelo {
     public void setProveedores(ProveedoresModelo proveedores) {
         this.proveedores = proveedores;
     }
-
-    public ProductosModelo getProductos() {
-        return productos;
-    }
-
-    public void setProductos(ProductosModelo productos) {
-        this.productos = productos;
-    }
+    
 
     public Integer getCantidad() {
         return cantidad;
@@ -58,7 +50,6 @@ public class DetalleCompraModelo {
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
-
     public BigDecimal getTotal() {
         return total;
     }

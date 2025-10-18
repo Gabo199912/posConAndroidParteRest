@@ -26,7 +26,7 @@ public class UsuarioControlador {
     }
 
 
-    //@PreAuthorize("hasRole('ADMINISTRADOR')")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @PostMapping("/administrador/crear")
     public ResponseEntity<?> crearUsuario(@RequestBody UsuarioModelo usuarioModelo){
         boolean okUsurario = usuarioServicio.verificarUsuarioExistente(usuarioModelo.getNombreUsuario());

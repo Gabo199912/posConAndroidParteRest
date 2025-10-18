@@ -9,7 +9,6 @@ import java.util.List;
 
 public class DetalleCompraDTO {
     public DetalleCompraModelo detalleCompraModelo;
-    public DetalleCompraProductoModelo detalleCompraProductoModelo;
     public ProveedoresModelo proveedoresModelo;
     public List<ProductosModelo> listaProductosModelo;
 
@@ -21,13 +20,7 @@ public class DetalleCompraDTO {
         this.detalleCompraModelo = detalleCompraModelo;
     }
 
-    public DetalleCompraProductoModelo getDetalleCompraProductoModelo() {
-        return detalleCompraProductoModelo;
-    }
 
-    public void setDetalleCompraProductoModelo(DetalleCompraProductoModelo detalleCompraProductoModelo) {
-        this.detalleCompraProductoModelo = detalleCompraProductoModelo;
-    }
 
     public ProveedoresModelo getProveedoresModelo() {
         return proveedoresModelo;

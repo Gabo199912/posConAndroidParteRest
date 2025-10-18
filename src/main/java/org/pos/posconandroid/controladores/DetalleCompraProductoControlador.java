@@ -76,10 +76,18 @@ public class DetalleCompraProductoControlador {
 
         detalleCompraServicio.guardarDetalle(detalleCompraModelo);
 
-        for (ProductosModelo productos: detalleCompraDTO.listaProductosModelo){
+        List<ProductosModelo> productos = detalleCompraDTO.listaProductosModelo;
+
+        for (int i  = 0; i < productos.size(); i++) {
+            System.out.println(productos.get(i).getIdProducto());
+        }
+
+        for (ProductosModelo producto: detalleCompraDTO.listaProductosModelo){
             DetalleCompraProductoModelo detalleCompraProducto = new DetalleCompraProductoModelo();
+            System.out.println(producto.getIdProducto());
+
             detalleCompraProducto.setDetalle(detalleCompraModelo);
-            detalleCompraProducto.setProducto(productos);
+            detalleCompraProducto.setProducto(producto);
 
             detalleCompraProductoServicio.guardarDetalle(detalleCompraProducto);
         }

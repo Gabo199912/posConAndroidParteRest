@@ -12,10 +12,10 @@ public class DetalleCompraProductoModelo {
     private Integer idDetalleCompraProducto;
 
     @ManyToOne
-    @JoinColumn(name = "id_detalle_compra")
+    @JoinColumn(name = "id_detalle")
     private DetalleCompraModelo detalle;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_producto")
     private ProductosModelo producto;
 
